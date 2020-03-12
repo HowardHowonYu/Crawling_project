@@ -8,13 +8,12 @@
 import scrapy
 
 
-class RocketpunchCrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
+class JobkoreaCrawlerItem(scrapy.Item):
+
     company_name = scrapy.Field()
-    business = scrapy.Field()
-    position = scrapy.Field()
-    link = scrapy.Field()
-    salary_condition = scrapy.Field()
     deadline = scrapy.Field()
+    business  = scrapy.Field()
+    link = scrapy.Field()
+    position = scrapy.Field()
+    job_condition = scrapy.Field()
     keyword = scrapy.Field()
-    location = scrapy.Field()
