@@ -10,8 +10,8 @@
   - 사람인 & 잡코리아 : 최대규모의 취업포털
 
 - 사이트 특징
-  - 로켓펀치 : 검색어를 입력하면 json형태로 구인 공고를 던져주는데, 각 공고별 **HTML 코드 전체**를 던져줌
-  ![ex_screenshot](./img/screenshot.png)
+  - 로켓펀치 : json형태, 하지만 **HTML 코드 전체**를 string의 형태로 던져줌
+  ![ex_screenshot](./rocketpunch_crawler/img/screenshot.png)
 
 
 - 수집 단계
