@@ -8,6 +8,7 @@ class RocketpunchSpider(scrapy.Spider):
     name = "Rocketpunch"
     allowed_domains = ['https://www.rocketpunch.com']
     
+    
     def __init__(self, specialty="python", tag="데이터", page=1, **kwargs):
         url_for_get_page = "https://www.rocketpunch.com/api/jobs/template?q=&specialty={}&tag={}&page={}".format(specialty, tag, page)
         response = requests.get(url_for_get_page)
