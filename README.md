@@ -11,7 +11,7 @@
 
 - 사이트 특징
   - 로켓펀치 : json형태, 하지만 **HTML 코드 전체**를 string의 형태로 던져줌
-  ![ex_screenshot](./rocketpunch_crawler/img/screenshot.png)
+  ![ex_screenshot](./rocketpunch_crawler/img/rp_json.png)
 
 
 - 수집 단계
