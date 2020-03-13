@@ -3,17 +3,21 @@
 0.0.3 ver
 - mongoDB저장, 슬렉 메세지 보내기
 
-#### 수집 목적
+## 프로젝트 목적
 
-- 데이터 관련 직군 구인 정보를 지속적으로 수집하기 위해
+- 데이터 관련 직군 구인 정보를 수집
+- 주기별로 업데이트 되는 구인 정보를 빠르게 수집
+- Slack을 이용해 링크에 빠르게 접근
 
-#### 수집 대상
+
+## 수집 대상
 
 - 크롤링할 사이트
   - 로켓펀치 : 스타트업 위주
   - 사람인 & 잡코리아 : 국내 최대 규모의 취업포털
 
-#### 작업 단계
+
+## 작업 단계
 
   1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
   2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
@@ -23,8 +27,9 @@
   6. 서버에서 실행될수 있도록 작업 
 
 
-#### 데이터셋 개요
+## 데이터셋 개요
 
+- **items.py**
 ```python
 import scrapy
 
@@ -42,15 +47,17 @@ class JobHunterItem(scrapy.Item):
 ``` 
 
 
-### 사이트 특징
+## 사이트 특징
+
 - **로켓펀치** 
+
   ![ex_screenshot](./img/rocketpunch.png)
 
   **HTML 코드**를 json형태안의 "string" 데이터 타입으로 response 함
   
   ![ex_screenshot](./img/rocketpunch2.png)
 
-  - **Spider.py**
+- **Spider.py**
 ```python  
 import scrapy
 import requests
@@ -130,9 +137,12 @@ class RocketpunchSpider(scrapy.Spider):
 ```
 
 - **잡코리아**
-  ![ex_screenshot](./img/jobkorea.png)
+
+  ![ex_screenshot](./img/jobkorea1.png)
   
-  - **spider.py**
+  ![ex_screenshot](./img/jobkorea2.png)
+  
+- **spider.py**
 ```python
 import scrapy
 import requests
@@ -196,6 +206,7 @@ class Spider(scrapy.Spider):
         
         item["keyword"] = response.xpath('//*[@id="artKeywordSearch"]/ul/li/button/text()').extract()[:-1]
         
+        # 화면에서 연봉 위치가 매변 바뀌어서 만든 과정입니다.
         for_select_salary_condition = " ".join(response.xpath('//*[@id="container"]/section/div/article/div[2]/div[2]/dl/dd/span[@class="tahoma"]/text()').extract()).strip().split(" ")[0]
         
         if len(for_select_salary_condition) <= 2:
@@ -219,19 +230,37 @@ class Spider(scrapy.Spider):
   
 
 - **사람인** 
-  - 웹페이지가 잡코리아와 유사한 형태
+  - 모바일 페이지로 크롤링
+  - 잡코리아와 유사한 방식으로 진행
+  
+  ![ex_screenshot](./img/saramin.png)
   ![ex_screenshot](./img/saramin1.png)
   ![ex_screenshot](./img/saramin2.png)
   
 
+## 현재까지 결과
 
-#### 진행중
+- **slack**
+
+  ![ex_screenshot](./img/slack.png)
+
+- **mongoDB**
+
+  ![ex_screenshot](./img/mongodb.png)
+
+
+
+## 진행중
+
   - 잡코리아 요청 제한을 피하기 위한 조치 (딜레이 최적화)
   - 사람인 프로젝트 완성
   - 로켓펀치, 사람인, 잡코리아를 병합
-    - 로켓펀치의 Spider 1개와, 사람인과 잡코리아를 크롤링 하는 Spider 1개로 구성
+    - 로켓펀치 Spider 1개와, 사람인과 잡코리아 Spider 1개로 구성
 
 
-#### 해결 과제
+
+
+## 해결 과제
+
   - 서버에서 주기적으로 실행될수 있도록 작성
   - requerments.txt 작성
