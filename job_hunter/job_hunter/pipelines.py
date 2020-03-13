@@ -47,7 +47,7 @@ class JobHunterPipeline(object):
         collection.insert(data)
         
         if self.keyword in item["position"]:
-            self.send_msg("회사명 : {} 직무 : {} 링크 : {}".format(item["company_name"],item["position"], item["link"]))
+            self.send_msg("회사명 : {} \n 직무 : {} \n 링크 : {}".format(item["company_name"],item["position"], item["link"]))
             
             
         return item

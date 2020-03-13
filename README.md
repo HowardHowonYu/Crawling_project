@@ -1,9 +1,7 @@
 # Crawling_project
 
-0.0.2 ver
-- 연봉 정보 크롤링 path 수정
-- 딜레이 5초로 수정
-
+0.0.3 ver
+- mongoDB저장, 슬렉 메세지 보내기
 
 #### 수집 목적
 
@@ -20,8 +18,9 @@
   1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
   2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
   3. **Scrapy** 프레임워크에 실습한 내용을 적용
-  4. 서버에서 실행될수 있도록 작업(mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 등)
-  5. 슬랙으로 공고 보내기
+  4. mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 실습)
+  5. 슬랙으로 메세지 보내는 기능 
+  6. 서버에서 실행될수 있도록 작업 
 
 
 #### 데이터셋 개요
@@ -156,7 +155,7 @@ class Spider(scrapy.Spider):
         
         super().__init__(**kwargs)
 
-    
+    # 5초 딜레이 막힘
     def parse(self, response):
         # 크롤링시 잡코리아에서 ip를 차단해 버리기 떄문에 딜레이를 걸어줬습니다.
         time.sleep(5)
@@ -197,24 +196,25 @@ class Spider(scrapy.Spider):
         
         item["keyword"] = response.xpath('//*[@id="artKeywordSearch"]/ul/li/button/text()').extract()[:-1]
         
+        for_select_salary_condition = " ".join(response.xpath('//*[@id="container"]/section/div/article/div[2]/div[2]/dl/dd/span[@class="tahoma"]/text()').extract()).strip().split(" ")[0]
         
-        # 구인 공고 링크 안으로 들어가 더 자세한 정보를 가져옵니다.
+        if len(for_select_salary_condition) <= 2:
+            item["salary_condition"]  = "회사 내규에 따름"
+        else :
+            item["salary_condition"] = for_select_salary_condition + "만원"
+        
+        
+        # 구인 공고 링크 안으로 들어가 사업 분야에 대한 더 자세한 정보를 가져옵니다.
         url = "http://www.jobkorea.co.kr" + response.xpath('//*/article[contains(@class, "artReadCoInfo") and contains(@class, "divReadBx")]/div/div/p/a/@href')[0].extract()
         
         req = requests.get(url)
         response_detail_page = TextResponse(req.url,body=req.text,encoding='utf-8')
         
         item["business"] = response_detail_page.xpath('//*[@id="company-body"]/div[1]/div[1]/div/div/div[9]/div[2]/div/div/text()')[0].extract()
-           
-        try:
-            item["salary_condition"] = response_detail_page.xpath('//*[@id="company-body"]/div[1]/div[1]/div/div/div[8]/div[2]/div/div/div/div/text()')[0].extract()
-        except:
-            item["salary_condition"] = "회사 내규에 따름 - 연봉 협의"
-        
-        
+     
+                
         yield item
  
-
 ```
   
 
@@ -226,15 +226,12 @@ class Spider(scrapy.Spider):
 
 
 #### 진행중
-  - 잡코리아 요청제한을 피하기 위한 조치 (딜레이 최적화)
+  - 잡코리아 요청 제한을 피하기 위한 조치 (딜레이 최적화)
   - 사람인 프로젝트 완성
   - 로켓펀치, 사람인, 잡코리아를 병합
+    - 로켓펀치의 Spider 1개와, 사람인과 잡코리아를 크롤링 하는 Spider 1개로 구성
 
 
 #### 해결 과제
   - 서버에서 주기적으로 실행될수 있도록 작성
   - requerments.txt 작성
-  - 데이터의 저장
-    - mongDB 데이터 베이스에 크롤링 한 데이터를 저장
-  - 슬랙 메시지
-    - 구인공고를 크롤링 할떄마다 새로 업데이트된 사항이 있으면 position과 link를 슬랙 메시지로 던져주는 작업
