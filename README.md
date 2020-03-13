@@ -1,5 +1,5 @@
 # Crawling_project
-0.0.1 ver
+0.0.2 ver
 
 #### 수집 목적
 
@@ -12,10 +12,11 @@
   - 사람인 & 잡코리아 : 국내 최대 규모의 취업포털
 
 #### 작업 단계
-  - 1-1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
-  - 1-2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
-  - 2. **Scrapy** 프레임워크에 실습한 내용을 적용
-  - 3. 서버에서 실행될수 있도록 작업(mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 등)
+  - 1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
+  - 2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
+  - 3. **Scrapy** 프레임워크에 실습한 내용을 적용
+  - 4. 서버에서 실행될수 있도록 작업(mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 등)
+  - 5. 슬랙으로 공고 보내기
 
 
 #### 데이터셋 개요
@@ -28,7 +29,7 @@ class JobHunterItem(scrapy.Item):
     company_name = scrapy.Field() # 회사명
     business = scrapy.Field() # 사업분야
     position = scrapy.Field() # 직무
-    link = scrapy.Field() # 링크
+    link = scrapy.Field() # 공고 링크
     salary_condition = scrapy.Field() # 연봉 및 조건
     deadline = scrapy.Field() # 기한
     keyword = scrapy.Field() # 직무관련 키워드
@@ -130,7 +131,6 @@ class RocketpunchSpider(scrapy.Spider):
   
   - **spider.py**
 ```python
-
 import scrapy
 import requests
 from scrapy.http import TextResponse
@@ -145,11 +145,11 @@ class Spider(scrapy.Spider):
     start_urls = []
    
     # 아규먼트를 받을수 있게 지정해 줬습니다.
-    # 잡코리아는 파이썬등 언어 설정을 디테일하게 해주지 못합니다.
+    # 잡코리아는 언어 설정, 특기등 설정값을 디테일하게 주지 못합니다.
     # careerType =1 은 신입을 말합니다. 추후 경력직 까지 크롤링 할떄 생성자 함수에 아규먼트를 추가할수 있습니다.
-    def __init__(self, serach_keyword="데이터 분석", page=1, **kwargs):
+    def __init__(self, serach_keyword="데이터 분석", careerType=1, page=1, **kwargs):
     
-        self.start_urls = ["http://www.jobkorea.co.kr/Search/?stext={}&careerType=1&tabType=recruit&Page_No={}".format(serach_keyword,page)]    
+        self.start_urls = ["https://www.jobkorea.co.kr/Search/?stext={}&careerType={}&tabType=recruit&Page_No={}".format(serach_keyword,careerType,page)]    
         
         super().__init__(**kwargs)
 
@@ -217,12 +217,15 @@ class Spider(scrapy.Spider):
 
 - **사람인** 
   - 웹페이지가 잡코리아와 유사한 형태
+  ![ex_screenshot](./img/saramin1.png)
+  ![ex_screenshot](./img/saramin2.png)
+  
 
 
 #### 진행중
-  - 잡코리아 요청제한을 피하기 위한 조치
-  - 사람인 크롤링 프로젝트 완성
-  - 로켓펀치, 사람인, 잡코리아를 한 프로젝트로 병합
+  - 잡코리아 요청제한을 피하기 위한 조치 (딜레이 최적화)
+  - 사람인 프로젝트 완성
+  - 로켓펀치, 사람인, 잡코리아를 병합
 
 
 #### 해결 과제

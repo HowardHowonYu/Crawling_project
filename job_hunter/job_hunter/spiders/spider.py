@@ -14,9 +14,9 @@ class Spider(scrapy.Spider):
     # 아규먼트를 받을수 있게 지정해 줬습니다.
     # 잡코리아는 언어 설정, 특기등 설정값을 디테일하게 주지 못합니다.
     # careerType =1 은 신입을 말합니다. 추후 경력직 까지 크롤링 할떄 생성자 함수에 아규먼트를 추가할수 있습니다.
-    def __init__(self, serach_keyword="데이터 분석", page=1, **kwargs):
+    def __init__(self, serach_keyword="데이터 분석", careerType=1, page=1, **kwargs):
     
-        self.start_urls = ["https://www.jobkorea.co.kr/Search/?stext={}&careerType=1&tabType=recruit&Page_No={}".format(serach_keyword,page)]    
+        self.start_urls = ["https://www.jobkorea.co.kr/Search/?stext={}&careerType={}&tabType=recruit&Page_No={}".format(serach_keyword,careerType,page)]    
         
         super().__init__(**kwargs)
 
