@@ -1,6 +1,6 @@
 # Crawling_project
 
-0.0.3 ver : mongoDB저장, 슬렉 메세지 보내기
+0.0.3 ver : mongoDB 저장, 슬렉 메세지 보내기
 
 ## 프로젝트 목적
 
