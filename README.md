@@ -232,7 +232,9 @@ class Spider(scrapy.Spider):
 - **사람인** 
   - 모바일 페이지로 크롤링
   - 잡코리아와 유사한 방식으로 진행
-  
+
+- **crawling_test.ipynb**
+
   ![ex_screenshot](./img/saramin.png)
   ![ex_screenshot](./img/saramin1.png)
   ![ex_screenshot](./img/saramin2.png)
