@@ -2,11 +2,6 @@
 
 0.0.3 ver : mongoDB저장, 슬렉 메세지 보내기
 
-0.0.2 ver : Scrapy 적용
-
-0.0.1 ver : 로켓펀치, 잡코리아, 사람인 크롤링(BeautifulSoup, TextResponse 등 활용)
-
-
 ## 프로젝트 목적
 
 - 데이터 관련 직군 구인 정보를 수집
@@ -266,3 +261,10 @@ class Spider(scrapy.Spider):
 
 ## 해결 과제
   - Slack 챗봇 제작
+
+
+##### update: 
+0.0.2 ver : Scrapy 적용
+
+0.0.1 ver : 로켓펀치, 잡코리아, 사람인 크롤링(BeautifulSoup, TextResponse 등 활용)
+
