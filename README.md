@@ -1,5 +1,9 @@
 # Crawling_project
+
 0.0.2 ver
+- 연봉 정보 크롤링 path 수정
+- 딜레이 5초로 수정
+
 
 #### 수집 목적
 
@@ -12,11 +16,12 @@
   - 사람인 & 잡코리아 : 국내 최대 규모의 취업포털
 
 #### 작업 단계
-  - 1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
-  - 2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
-  - 3. **Scrapy** 프레임워크에 실습한 내용을 적용
-  - 4. 서버에서 실행될수 있도록 작업(mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 등)
-  - 5. 슬랙으로 공고 보내기
+
+  1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
+  2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
+  3. **Scrapy** 프레임워크에 실습한 내용을 적용
+  4. 서버에서 실행될수 있도록 작업(mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 등)
+  5. 슬랙으로 공고 보내기
 
 
 #### 데이터셋 개요
@@ -47,8 +52,7 @@ class JobHunterItem(scrapy.Item):
   ![ex_screenshot](./img/rocketpunch2.png)
 
   - **Spider.py**
-```python
-  
+```python  
 import scrapy
 import requests
 from bs4 import BeautifulSoup
@@ -145,7 +149,6 @@ class Spider(scrapy.Spider):
     start_urls = []
    
     # 아규먼트를 받을수 있게 지정해 줬습니다.
-    # 잡코리아는 언어 설정, 특기등 설정값을 디테일하게 주지 못합니다.
     # careerType =1 은 신입을 말합니다. 추후 경력직 까지 크롤링 할떄 생성자 함수에 아규먼트를 추가할수 있습니다.
     def __init__(self, serach_keyword="데이터 분석", careerType=1, page=1, **kwargs):
     
@@ -170,7 +173,7 @@ class Spider(scrapy.Spider):
     # 크롤링시 잡코리아에서 ip를 차단해 버리기 떄문에 딜레이를 걸어줬습니다.
         time.sleep(5)
         links = response.xpath('//*[@id="content"]/div/div/div[1]/div/div[2]/div[2]/div/div[1]/ul/li/div/div[2]/a/@href').extract()
-        # 이과정에서 각 페이지 별로 가지고 있는 구인 공고들의 링크를 만들어 yield로 get_details()함수에 던져줍니다.
+        # 이 과정에서 각 페이지 별로 가지고 있는 구인 공고들의 링크를 만들어 yield로 get_details()함수에 던져줍니다.
         links = ["http://www.jobkorea.co.kr/" + link for link in links]   
         for link in links:
             yield scrapy.Request(link, callback=self.get_details)
