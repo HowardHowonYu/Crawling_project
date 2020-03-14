@@ -1,8 +1,13 @@
 # Crawling_project
 
+<<<<<<< HEAD
 0.0.4 ver
 - mongoDB저장, 슬렉 메세지 보내기
 - 사람인 추가
+=======
+0.0.3 ver
+- mongoDB저장, 슬렉 메세지 보내기
+>>>>>>> 7e292526ac918575a5fdf0262c91d89c2534cc0f
 
 ## 프로젝트 목적
 
