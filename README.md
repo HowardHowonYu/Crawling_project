@@ -1,6 +1,7 @@
 # Crawling_project
 
-0.0.3 ver : mongoDB 저장, 슬렉 메세지 보내기
+0.0.3 ver
+- mongoDB저장, 슬렉 메세지 보내기
 
 ## 프로젝트 목적
 
@@ -21,9 +22,9 @@
   2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
   3. **Scrapy** 프레임워크에 실습한 내용을 적용
   4. mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 실습)
-  5. Slack 으로 메세지 보내는 기능 구현 
+  5. 슬랙으로 메세지 보내는 기능 
   6. 서버에서 실행될수 있도록 작업 
-  7. Slack 챗봇 제작 
+
 
 ## 데이터셋 개요
 
@@ -188,20 +189,17 @@ class Spider(scrapy.Spider):
       
     def get_details(self, response):
         time.sleep(5)
-        item = JobHunterItem()   
         
+        item = JobHunterItem()   
         item["company_name"] = response.xpath('//*[@id="container"]/section/div/article/div[1]/h3/span/text()')[0].extract().strip()
+        
         try:
             item["deadline"] = response.xpath('//*[@id="tab02"]/div/article[1]/div/dl[2]/dd[2]/span/text()')[0].extract()[5:] + " 마감"
         except:
-            item["deadline"] = "수시채용"
-            
+            item["deadline"] = "수시채용"    
         item['link'] = response.url
-        
         item["position"] = response.xpath('//*[@id="container"]/section/div/article/div[1]/h3/text()')[1].extract().strip()
-        
         item['location'] = ",".join(response.xpath('//*[@id="container"]/section/div/article/div[2]/div/dl/dd/a/text()').extract())
-        
         item["keyword"] = response.xpath('//*[@id="artKeywordSearch"]/ul/li/button/text()').extract()[:-1]
         
         # 화면에서 연봉 위치가 매변 바뀌어서 만든 과정입니다.
@@ -218,7 +216,6 @@ class Spider(scrapy.Spider):
         
         req = requests.get(url)
         response_detail_page = TextResponse(req.url,body=req.text,encoding='utf-8')
-        
         item["business"] = response_detail_page.xpath('//*[@id="company-body"]/div[1]/div[1]/div/div/div[9]/div[2]/div/div/text()')[0].extract()
      
                 
@@ -261,10 +258,3 @@ class Spider(scrapy.Spider):
 
 ## 해결 과제
   - Slack 챗봇 제작
-
-
-##### update: 
-0.0.2 ver : Scrapy 적용
-
-0.0.1 ver : 로켓펀치, 잡코리아, 사람인 크롤링(BeautifulSoup, TextResponse 등 활용)
-
