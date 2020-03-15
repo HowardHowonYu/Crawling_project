@@ -2,6 +2,7 @@ import scrapy
 import requests
 from scrapy.http import TextResponse
 import time
+import datetime
 
 from job_hunter.items import JobHunterItem
 
@@ -11,9 +12,9 @@ class Spider(scrapy.Spider):
     name = "SaraminCrawler"
     allow_domain = ["http://www.saramin.co.kr/"]
 
-    def __init__(self, searchword="데이터사이언스", **kwargs):
+    def __init__(self, searchword="데이터", **kwargs):
 
-        self.start_urls = ["http://m.saramin.co.kr/search?searchType=search&searchword={}".format(searchword)]
+        self.start_urls = ["http://m.saramin.co.kr/search?searchType=search&searchword={}&exp_cd=1".format(searchword)]
 
         super().__init__(**kwargs)
 
@@ -37,9 +38,12 @@ class Spider(scrapy.Spider):
 
     def get_content(self,response):
         item = JobHunterItem()  
-       
+
+        item['date'] = datetime.datetime.now()
+
         result = response.xpath('//*[@id="card_set"]/div[1]/div/div[1]/div/span/span/text()').extract()
 
+        
         if result:
             item['company_name'] = result[0]
         else :

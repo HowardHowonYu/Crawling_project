@@ -9,6 +9,7 @@ import scrapy
 
 
 class JobHunterItem(scrapy.Item):
+    date = scrapy.Field()
     company_name = scrapy.Field()
     business = scrapy.Field()
     position = scrapy.Field()

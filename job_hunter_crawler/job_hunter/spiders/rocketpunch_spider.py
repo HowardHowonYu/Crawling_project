@@ -2,6 +2,8 @@ import scrapy
 import requests
 from bs4 import BeautifulSoup
 import json
+import datetime
+
 
 from job_hunter.items import JobHunterItem
 
@@ -56,6 +58,8 @@ class RocketpunchSpider(scrapy.Spider):
                 dom_for_skills = BeautifulSoup(response.text,"html.parser")    
                 
                 item = JobHunterItem()
+                item['date'] = datetime.datetime.now()
+
                 item["company_name"] = root[i].select('div.company-name > a > h4 > strong')[0].text
                 item["business"] = root[i].select('div.description')[0].text.strip('\xa0')
                 item["position"] = positions[i].select('div:nth-child(1) > a.nowrap')[j].text

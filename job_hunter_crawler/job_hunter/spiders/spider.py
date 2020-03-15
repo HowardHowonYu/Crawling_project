@@ -2,6 +2,7 @@ import scrapy
 import requests
 from scrapy.http import TextResponse
 import time
+import datetime
 
 from job_hunter.items import JobHunterItem
 
@@ -13,7 +14,7 @@ class Spider(scrapy.Spider):
    
     # 아규먼트를 받을수 있게 지정해 줬습니다.
     # careerType =1 은 신입을 말합니다. 추후 경력직 까지 크롤링 할떄 생성자 함수에 아규먼트를 추가할수 있습니다.
-    def __init__(self, serach_keyword="데이터 분석", careerType=1, page=1, **kwargs):
+    def __init__(self, serach_keyword="데이터", careerType=1, page=1, **kwargs):
     
         self.start_urls = ["https://www.jobkorea.co.kr/Search/?stext={}&careerType={}&tabType=recruit&Page_No={}".format(serach_keyword,careerType,page)]    
         
@@ -22,7 +23,7 @@ class Spider(scrapy.Spider):
     # 5초 딜레이 막힘
     def parse(self, response):
         # 크롤링시 잡코리아에서 ip를 차단해 버리기 떄문에 딜레이를 걸어줬습니다.
-        time.sleep(30)
+        time.sleep(20)
         total_pages = int(response.xpath('//*[@id="content"]/div/div/div[1]/div/div[2]/div[2]/div/div[3]/ul/li[2]/span/text()')[0].extract())
         # 나중에 사람인이나 다른 사이트들 한 spider에서 크롤링 하려면 어떻게 할지 고민
         for page in range(1, total_pages +1):                        
@@ -34,7 +35,7 @@ class Spider(scrapy.Spider):
    
     def get_content(self, response):
     # 크롤링시 잡코리아에서 ip를 차단해 버리기 떄문에 딜레이를 걸어줬습니다.
-        time.sleep(30)
+        time.sleep(20)
         links = response.xpath('//*[@id="content"]/div/div/div[1]/div/div[2]/div[2]/div/div[1]/ul/li/div/div[2]/a/@href').extract()
         # 이 과정에서 각 페이지 별로 가지고 있는 구인 공고들의 링크를 만들어 yield로 get_details()함수에 던져줍니다.
         links = ["http://www.jobkorea.co.kr/" + link for link in links]   
@@ -43,10 +44,13 @@ class Spider(scrapy.Spider):
       
       
     def get_details(self, response):
-        time.sleep(30)
+        time.sleep(20)
         item = JobHunterItem()   
         
+        item['date'] = datetime.datetime.now()
+
         item["company_name"] = response.xpath('//*[@id="container"]/section/div/article/div[1]/h3/span/text()')[0].extract().strip()
+
         try:
             item["deadline"] = response.xpath('//*[@id="tab02"]/div/article[1]/div/dl[2]/dd[2]/span/text()')[0].extract()[5:] + " 마감"
         except:
