@@ -22,7 +22,7 @@ class Spider(scrapy.Spider):
     # 5초 딜레이 막힘
     def parse(self, response):
         # 크롤링시 잡코리아에서 ip를 차단해 버리기 떄문에 딜레이를 걸어줬습니다.
-        time.sleep(15)
+        time.sleep(30)
         total_pages = int(response.xpath('//*[@id="content"]/div/div/div[1]/div/div[2]/div[2]/div/div[3]/ul/li[2]/span/text()')[0].extract())
         # 나중에 사람인이나 다른 사이트들 한 spider에서 크롤링 하려면 어떻게 할지 고민
         for page in range(1, total_pages +1):                        
@@ -34,7 +34,7 @@ class Spider(scrapy.Spider):
    
     def get_content(self, response):
     # 크롤링시 잡코리아에서 ip를 차단해 버리기 떄문에 딜레이를 걸어줬습니다.
-        time.sleep(15)
+        time.sleep(30)
         links = response.xpath('//*[@id="content"]/div/div/div[1]/div/div[2]/div[2]/div/div[1]/ul/li/div/div[2]/a/@href').extract()
         # 이 과정에서 각 페이지 별로 가지고 있는 구인 공고들의 링크를 만들어 yield로 get_details()함수에 던져줍니다.
         links = ["http://www.jobkorea.co.kr/" + link for link in links]   
@@ -43,7 +43,7 @@ class Spider(scrapy.Spider):
       
       
     def get_details(self, response):
-        time.sleep(15)
+        time.sleep(30)
         item = JobHunterItem()   
         
         item["company_name"] = response.xpath('//*[@id="container"]/section/div/article/div[1]/h3/span/text()')[0].extract().strip()
@@ -69,12 +69,13 @@ class Spider(scrapy.Spider):
         
         
         # 구인 공고 링크 안으로 들어가 사업 분야에 대한 더 자세한 정보를 가져옵니다.
-        url = "http://www.jobkorea.co.kr" + response.xpath('//*/article[contains(@class, "artReadCoInfo") and contains(@class, "divReadBx")]/div/div/p/a/@href')[0].extract()
+        # 여기 오류 생김 고쳐야 함.
+        # url = "http://www.jobkorea.co.kr" + response.xpath('//*/article[contains(@class, "artReadCoInfo") and contains(@class, "divReadBx")]/div/div/p/a/@href')[0].extract()
         
-        req = requests.get(url)
-        response_detail_page = TextResponse(req.url,body=req.text,encoding='utf-8')
+        # req = requests.get(url)
+        # response_detail_page = TextResponse(req.url,body=req.text,encoding='utf-8')
         
-        item["business"] = response_detail_page.xpath('//*[@id="company-body"]/div[1]/div[1]/div/div/div[9]/div[2]/div/div/text()')[0].extract()
+        item["business"] = response.xpath('//*[@id="container"]/section/div/article/div[2]/div[3]/dl/dd/text()')[0].extract().strip()
      
                 
         yield item
