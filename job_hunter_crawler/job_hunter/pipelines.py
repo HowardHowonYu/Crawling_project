@@ -27,15 +27,19 @@ class JobHunterPipeline(object):
  
     def process_item(self, item, spider):      
         # create record if doesn't exist.
-        self.cursor.execute("select * from job_hunter where date = %s and company_name = %s and business = %s and position = %s and link = %s and salary_condition = %s and deadline = %s and keyword = %s and location = %s", (item['date'], item["company_name"].encode('utf-8'), item["business"].encode('utf-8'), item["position"].encode('utf-8'), item["link"].encode('utf-8'), item["salary_condition"].encode('utf-8'), item["deadline"].encode('utf-8'), item["keyword"].encode('utf-8'), item['location'].encode('utf-8')))
-        result = self.cursor.fetchone()
+        # self.cursor.execute("select * from job_hunter where date = %s and company_name = %s and business = %s and position = %s and link = %s and salary_condition = %s and deadline = %s and keyword = %s and location = %s", (item['date'], item["company_name"].encode('utf-8'), item["business"].encode('utf-8'), item["position"].encode('utf-8'), item["link"].encode('utf-8'), item["salary_condition"].encode('utf-8'), item["deadline"].encode('utf-8'), item["keyword"].encode('utf-8'), item['location'].encode('utf-8')))
+        # result = self.cursor.fetchone()
         # print "select * from apt2u.apt where aptname = '%s' and link = 'http://www.apt2you.com/houseSaleDetailInfo.do?manageNo=%s' and company = '%s' and receiptdate = '%s' and result_date = '%s'" % (item['aptname'][0].encode('utf-8'), item['link'][0].encode('utf-8'), item['company'][0].encode('utf-8'), item['receiptdate'][0].encode('utf-8'), item['result_date'][0].encode('utf-8'))
  
         # if result:
         #     print("data already exist")    
         # else:
         #     try:
-        self.cursor.execute("insert into job_hunter(date, company_name, business, position, link, salary_condition, deadline, keyword, location) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (item['date'], item["company_name"].encode('utf-8'), item["business"].encode('utf-8'), item["position"].encode('utf-8'), item["link"].encode('utf-8'), item["salary_condition"].encode('utf-8'), item["deadline"].encode('utf-8'), item["keyword"].encode('utf-8'), item['location'].encode('utf-8')))
+        # mycursor.execute("INSERT INTO berita (judul, isi, tag) VALUES (%s, %s, %s) WHERE NOT EXISTS (SELECT judul FROM berita WHERE judul like '%s')", (item1, item2, items3, item1))
+        # mycursor.execute("INSERT INTO berita (judul, isi, tag) VALUES (%s, %s, %s) WHERE NOT EXISTS (SELECT judul FROM berita WHERE judul like '%s')", (item1, item2, items3, item1))
+
+        self.cursor.execute("INSERT INTO job_hunter (date, company_name, business, position, link, salary_condition, deadline, keyword, location) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (item['date'], item["company_name"].encode('utf-8'), item["business"].encode('utf-8'), item["position"].encode('utf-8'), item["link"].encode('utf-8'), item["salary_condition"].encode('utf-8'), item["deadline"].encode('utf-8'), item["keyword"].encode('utf-8'), item['location'].encode('utf-8')))
+        # self.cursor.execute("DELETE a FROM job_hunter a, job_hunter b WHERE a.id > b.id AND a.link = b.link;")
         self.conn.commit()
     # except MySQLdb.Error, e:
             #     print "Error %d: %s" % (e.args[0], e.args[1])

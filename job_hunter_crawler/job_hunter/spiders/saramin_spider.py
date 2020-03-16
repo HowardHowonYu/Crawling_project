@@ -12,7 +12,7 @@ class Spider(scrapy.Spider):
     name = "SaraminCrawler"
     allow_domain = ["http://www.saramin.co.kr/"]
 
-    def __init__(self, searchword="데이터", **kwargs):
+    def __init__(self, searchword="데이터 분석", **kwargs):
 
         self.start_urls = ["http://m.saramin.co.kr/search?searchType=search&searchword={}&exp_cd=1".format(searchword)]
 
@@ -22,7 +22,7 @@ class Spider(scrapy.Spider):
 
     def parse(self, response):
 
-         total_pages = response.xpath('//*[@class="pagiNation"]/a[last()]/text()')[0].extract()
+         total_pages = int(response.xpath('//*[@id="recruit_total_count"]/text()')[0].extract().replace(',','')) // 20
 
          for i in range(1,int(total_pages)+1):
             url = self.start_urls[0] + "&page={}".format(i)
