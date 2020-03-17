@@ -7,7 +7,11 @@
 =======
 0.0.3 ver
 - mongoDB저장, 슬렉 메세지 보내기
+<<<<<<< HEAD
 >>>>>>> 7e292526ac918575a5fdf0262c91d89c2534cc0f
+=======
+>>>>>>> 7e29252... add saramin crawler
+>>>>>>> 5b392cd... edit README.md
 
 ## 프로젝트 목적
 
