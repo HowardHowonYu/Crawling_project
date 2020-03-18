@@ -111,6 +111,8 @@ class JobHunterPipeline(object):
 
  - tmux로 flask 돌아가는 중
  - **@Job Hunter '검색어'** 
+ - 채널에서 봇을 호출
+ - DM 에서 구현은 현재 진행중
 
 
 ## 프로젝트 회고
