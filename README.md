@@ -72,10 +72,9 @@ class JobHunterItem(scrapy.Item):
   - 모바일 페이지로 크롤링
   - 잡코리아와 유사한 방식으로 진행
 
-- **crawling_test.ipynb**
-
   ![ex_screenshot](./img/saramin.png)
 
+![ex_screenshot](./img/summary.png)
 
 ## DB
 - SQLAlchemy 사용시 서버에서 SQL로 파이프라인을 통해 데이터 저장시 인코딩 문제 발생
@@ -104,7 +103,6 @@ class JobHunterPipeline(object):
 
 ## 슬랙 앱
 
- - 크롤링 -> MySQL db 저장 <- flask -> slack
  - tmux로 flask 돌아가는 중
  - **@Job Hunter '검색어'** 
 
