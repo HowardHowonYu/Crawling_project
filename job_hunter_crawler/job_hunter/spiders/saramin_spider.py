@@ -74,9 +74,9 @@ class Spider(scrapy.Spider):
         deadline = response.xpath('//*[@class="card_cont wrap_recruit_view"]/section[@class="section_view section_basic_view"]/div[@class="wrap_info_job"]/dl[1]/dd/span[1]/text()')[0].extract().strip()
         
         if deadline:
-            item['deadline'] = deadline
+            item['deadline'] = str(datetime.datetime.now().year) + "." + deadline.replace("~","").replace("/",".")[:5]
         else:
-            item['deadline'] = "상시 채용"
+            item['deadline'] = "수시채용"
         
         item['keyword'] = str(response.xpath('//*[@class="list_relation_tag"]/li/a/text()').extract()).strip("[]''")
 

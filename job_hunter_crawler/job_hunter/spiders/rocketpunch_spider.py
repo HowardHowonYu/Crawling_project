@@ -65,7 +65,12 @@ class RocketpunchSpider(scrapy.Spider):
                 item["position"] = positions[i].select('div:nth-child(1) > a.nowrap')[j].text
                 item["link"] = link
                 item["salary_condition"] = positions[i].select('div.job-detail > div:nth-child(1) > span')[j].text
-                item["deadline"] = positions[i].select('div.job-detail > div.job-dates > span:nth-child(1)')[j].text.strip(' \n').replace("/",".")
+                deadline = positions[i].select('div.job-detail > div.job-dates > span:nth-child(1)')[j].text.strip(' \n').replace("/",".")[:5]
+                if len(deadline) == 5:
+                    item["deadline"] = str(datetime.datetime.now().year) + "." + deadline
+                else:
+                    item["deadline"] = deadline
+                # item["deadline"] = str(datetime.datetime.now().year) + "." + positions[i].select('div.job-detail > div.job-dates > span:nth-child(1)')[j].text.strip(' \n').replace("/",".")[:5]
                 item["keyword"] = ", ".join([a.text for a in dom_for_skills.select('div .job-specialties > a ')])
                 # <br\>로 나누어져 있기 때문에, 처음부터 끝까지 1칸씩 간격을 두고 찾아내면 지역이 몇개건 상관없이 가져올수 있음
                 item['location'] = ", ".join(dom_for_skills.select('#wrap > div.four.wide.job-infoset.column > div > div:nth-child(3) > div > div:nth-child(2) > div.content')[0].contents[::2]).strip()

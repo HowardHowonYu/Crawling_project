@@ -11,7 +11,7 @@ class Spider(scrapy.Spider):
     name = "JobkoreaCrawler"
     allow_domain = ["https://www.jobkorea.co.kr/"]
     start_urls = []
-   
+
     # 아규먼트를 받을수 있게 지정해 줬습니다.
     # careerType =1 은 신입을 말합니다. 추후 경력직 까지 크롤링 할때 생성자 함수에 아규먼트를 추가할수 있습니다.
     def __init__(self, serach_keyword="데이터 분석", careerType=1, page=1, **kwargs):
@@ -52,7 +52,7 @@ class Spider(scrapy.Spider):
         item["company_name"] = response.xpath('//*[@id="container"]/section/div/article/div[1]/h3/span/text()')[0].extract().strip()
 
         try:
-            item["deadline"] = response.xpath('//*[@id="tab02"]/div/article[1]/div/dl[2]/dd[2]/span/text()')[0].extract()[5:] + " 마감"
+            item["deadline"] = str(datetime.datetime.now().year) + "." + response.xpath('//*[@id="tab02"]/div/article[1]/div/dl[2]/dd[2]/span/text()')[0].extract()[5:]
         except:
             item["deadline"] = "수시채용"
             
