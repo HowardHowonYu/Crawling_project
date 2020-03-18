@@ -64,8 +64,8 @@ class JobHunterItem(scrapy.Item):
   ![ex_screenshot](./img/jobkorea1.png)
   
   ![ex_screenshot](./img/jobkorea2.png)
-  - trt, except 구문등의 방법으로 서버를 껏다 켰다 하는 방식으로 진행하려 했으나, 자주 발생하는 에러
-  - 요청하는 횟수(공고의 갯수)에 따라 block 당하는 상황과 대처방식이 달라
+  - 에러를 만날때 마다 서버를 껏다 켰다 하는 방식 새로운 ip로 접근하는 방식을 고려
+  - 자주 발생하는 에러, 요청하는 횟수(공고의 갯수)에 따라 block 당하는 상황이 달라
   - 요청횟수에 비례하는 최적화된 time.sleep(?)을 찾는 방식으로 진행
 
 - **사람인** 
