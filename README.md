@@ -74,7 +74,11 @@ class JobHunterItem(scrapy.Item):
 
   ![ex_screenshot](./img/saramin.png)
 
+## 구조도
+
 ![ex_screenshot](./img/summary.png)
+
+
 
 ## DB
 - SQLAlchemy 사용시 서버에서 SQL로 파이프라인을 통해 데이터 저장시 인코딩 문제 발생
