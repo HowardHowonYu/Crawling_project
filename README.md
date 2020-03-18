@@ -21,12 +21,12 @@
 
 ## 작업 단계
 
-  1. 로컬에서 **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링 실습
-  2. 로컬에서 **TextResponse**로 xpath를 활용한 크롤링 실습
+  1. **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링
+  2. **TextResponse**로 xpath를 활용한 크롤링
   3. **Scrapy** 프레임워크에 실습한 내용을 적용
-  4. mongDB에 데이터 저장, crontab을 이용한 크롤링 주기 설정 실습)
-  5. 슬랙으로 메세지 보내는 기능 
-  6. 서버에서 실행될수 있도록 작업 
+  4. SQL에 데이터 저장, crontab을 이용한 크롤링 주기 설정
+  5. 서버에서 실행될수 있도록 작업 
+  6. 슬랙으로 메세지 보내는 기능 
 
 
 ## 데이터셋 개요
