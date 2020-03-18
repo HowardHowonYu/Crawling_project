@@ -81,6 +81,8 @@ class JobHunterItem(scrapy.Item):
 - SQLAlchemy 사용시 서버에서 SQL로 파이프라인을 통해 데이터 저장시 인코딩 문제 발생
 - MySQLdb.cursors 활용
 
+- **pipelines.py**
+
 ```python
 
 class JobHunterPipeline(object):
@@ -104,20 +106,21 @@ class JobHunterPipeline(object):
 
  - 크롤링 -> MySQL db 저장 <- flask -> slack
  - tmux로 flask 돌아가는 중
- - 현재 **@<앱 이름> 검색어** 기능 구현
+ - **@Job Hunter '검색어'** 
+
 
 ## 프로젝트 회고
  - 프로젝트 하면서 느낀점
    - 목적의식의 중요성
    - 프로젝트의 전체 구조, 예상 진행 과정등을 철저히 검증해야..
+
+ - 추후 연구 및 개선사항
+   - 구인 공고 사이트 추가
+   - 슬랙 앱이 제공하는 옵션을 활용 세분화된 공고 추천기능 구현
+   - 동시에 여러명이 정보를 요청할 때의 에러 등을 고민
    
  - **결론**
    - 세상에 쉬운 크롤링은 없다.
-   
- - 추후 연구 및 개선사항
-   - 슬랙 앱이 제공하는 옵션을 활용 세분화된 공고 추천기능 구현
-   - 동시에 여러명이 정보를 요청할때의 에러 등을 고민
-
 
   
   
