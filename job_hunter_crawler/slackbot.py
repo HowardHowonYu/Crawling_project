@@ -78,7 +78,11 @@ def event_handler(event_type, slack_event):
             keyword = user_input[1]['text']
             con = MySQLdb.connect(user='root', passwd='dss', db='job_hunter', host='15.164.136.109', charset="utf8", use_unicode=True)
             cursor = con.cursor()
-            sql = "SELECT * FROM job_hunter WHERE position like '%{}%' order by deadline".format(keyword)
+            sql = """(SELECT * FROM job_hunter WHERE (str_to_date(deadline,'%Y.%m.%d') > now() and position like '%{}%') 
+                      order by deadline limit 70) 
+                      UNION
+                      (SELECT * FROM job_hunter WHERE deadline like '수시채용' limit 30);
+                      """.format(keyword)
             cursor.execute(sql)
             result = cursor.fetchall()
             attachments = get_answer(result)

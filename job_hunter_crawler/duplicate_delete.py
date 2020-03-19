@@ -11,7 +11,7 @@ sql1 = "delete from job_hunter where id not in (select * from (select max(id) fr
 # id값 리셋
 sql2 = "ALTER TABLE job_hunter AUTO_INCREMENT=1; SET @COUNT = 0; UPDATE job_hunter SET id = @COUNT:=@COUNT+1;"
 # 날짜 지난 공고 삭제
-sql3 = "delete from job_hunter where deadline not like '%수시채용%' and str_to_date(deadline,'%Y.%m.%d') < date;"
+# sql3 = "delete from job_hunter where deadline not like '%수시채용%' and str_to_date(deadline,'%Y.%m.%d') < date;"
 curs.execute(sql1)
 curs.execute(sql2)
-curs.execute(sql3)
+# curs.execute(sql3)
