@@ -7,7 +7,7 @@
 ## Technical Skills
 - Python, Scrapy, MySQL, SQL ALchemy, Crontab, AWS, Flask
 
-## Workflow
+## Structure
   <img src="./img/summary.png" width="800px">
 
   1. **BeautifulSoup**로 HTML로 파싱하여 Css-selector를 활용한 크롤링
