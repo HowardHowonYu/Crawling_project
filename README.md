@@ -31,20 +31,20 @@
 
 #### 사이트별 특징
 
-- **로켓펀치** 
+**로켓펀치** 
 <img src="./img/rocketpunch2.png" width="800px">
 
   - **HTML 코드**를 json형태안의 "string" 데이터 타입으로 response 함
   
 
-- **잡코리아**
+**잡코리아**
 <img src="./img/jobkorea2.png" width="800px">
 
   - 에러를 만날때 마다 서버를 껏다 켰다 하는 방식 새로운 ip로 접근하는 방식을 고려
   - 자주 발생하는 에러, 요청하는 횟수(공고의 갯수)에 따라 block 당하는 상황이 달라
   - 최적화된 time.sleep을 찾는 방식도 진행
 
-- **사람인** 
+**사람인** 
 <img src="./img/saramin.png" width="300px">
 
   - 모바일 페이지로 크롤링
