@@ -32,25 +32,31 @@
 #### 사이트별 특징
 
 - **로켓펀치** 
-  - **HTML 코드**를 json형태안의 "string" 데이터 타입으로 response 함
-  <img src="./img/rocketpunch2.png" width="800px">
 
+<img src="./img/rocketpunch2.png" width="800px">
+
+  - **HTML 코드**를 json형태안의 "string" 데이터 타입으로 response 함
+  
 
 - **잡코리아**
-  <img src="./img/jobkorea2.png" width="800px">
+
+<img src="./img/jobkorea2.png" width="800px">
+
   - 에러를 만날때 마다 서버를 껏다 켰다 하는 방식 새로운 ip로 접근하는 방식을 고려
   - 자주 발생하는 에러, 요청하는 횟수(공고의 갯수)에 따라 block 당하는 상황이 달라
   - 최적화된 time.sleep을 찾는 방식도 진행
 
 - **사람인** 
-  <img src="./img/saramin.png" width="300px">
+
+<img src="./img/saramin.png" width="300px">
+
   - 모바일 페이지로 크롤링
   - 잡코리아와 유사한 방식으로 진행
 
  
 
 #### DB
-- DB 중복 제거, 업데이트 던져주는 **duplicate_delete.py** 실행후 run.sh 종료
+- 현재는 DB 중복 제거, 업데이트를 **duplicate_delete.py**에서 쿼리를 직접 던지는 방식.
 - 추후 SQL Injection을 방지하기 위한 방법 적용(SQl ALchemy 등 api방식으로 구현)
 
 
@@ -73,18 +79,3 @@
  - **결론**
    - 쉬운게 하나도 없었다.
    - 하지만 많이 배웠다.
-
-  
-  
-  
-  
-0.0.4 ver
-- mongoDB저장, 슬렉 메세지 보내기
-- 사람인 추가
-
-0.0.3 ver
-- mongoDB저장, 슬렉 메세지 보내기
-
-0.1.0 ver
-- 슬랙 앱 추가(베타)
-
