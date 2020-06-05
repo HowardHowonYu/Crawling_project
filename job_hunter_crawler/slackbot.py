@@ -20,7 +20,7 @@ key = "data"
 # city_df = pd.read_sql(QUERY,engine)
 
 
-token  = "xoxb-881894006755-1009615633511-bTqIzFjWZ1hdQTL9h6n06FXu"
+token  = "  "
 slack = Slacker(token)
 
 
