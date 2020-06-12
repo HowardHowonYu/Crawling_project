@@ -103,7 +103,6 @@ def event_handler(event_type, slack_event):
 
 
 if __name__ == '__main__':
-
     app.run(debug=True)
 
 
